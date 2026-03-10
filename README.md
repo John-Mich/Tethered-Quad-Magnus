@@ -10,7 +10,7 @@ Airborne Wind Turbine for steady flight (Tethered Fly-Gen AWE) with Quad-rotor l
 
 Traditional AWE systems (tethered kites or gliders) rely on passive airfoils that are highly susceptible to stall during turbulent gusts or sudden wind drops. QuadMagnus explores active aerodynamic control.
 
-By utilizing the Magnus effect, the drone can theoretically generate extreme lift coefficients ($C_L$) even at near-zero relative wind speeds. The goal is to maximize tension on a ground-based winch generator while maintaining absolute attitude control.
+By utilizing the Magnus effect, the drone can theoretically generate extreme lift coefficients ($C_L$) even at near-zero relative wind speeds.
 
 ---
 
