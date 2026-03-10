@@ -12,99 +12,67 @@ Traditional AWE systems (tethered kites or gliders) rely on passive airfoils tha
 
 By utilizing the Magnus effect, the drone can theoretically generate lift coefficients ($C_L$) even at near-zero relative wind speeds.
 
----
+### 1. General Architecture & Goals (System Overview)
 
-## 1. General Architecture & Dimensions (System Overview)
-
-* **System Type:** Airborne Wind Turbine for steady flight (Tethered Fly-Gen AWE) with **vertical takeoff/landing capability (VTOL)**.
-* **Configuration:** Quad-rotor layout.
-* **Total Weight (Dry Mass):** ~300 kg.
-* **Rated Power:** 20 kW (at wind speed 8–10 m/s).
-* **Tether Tension:** Estimated **10–12 tons** under full load.
+* **System Type:** Airborne Wind Turbine with Fixed Flight (Tethered Fly-Gen AWE) capable of vertical takeoff/landing (VTOL).
+* **Layout:** Quad-rotor (quadcopter layout).
+* **Ecology Goal:** 100% bird protection (Bird-Safe Design) due to large visual presence, absence of sharp blades, and lack of “sweeping” figure-eight motions in the sky.
+* **Rated Power:** Reference baseline **20+ kW**, with design tolerance for much higher production (scalable) depending on the generator and high-altitude winds.
+* **Total Weight (Dry Mass):** < 280 kg (reduced thanks to the 3-cylinder rotor configuration).
 
 ---
 
-## 2. Rotor Assembly
+### 2. The Rotor System (Rotor Assembly)
 
-Each of the four rotors does **not** have conventional blades. Instead, it consists of a central **hub**, four cylindrical **spokes**, and an outer **rim**.
+Each rotor eliminates classic blades by using rotating cylinders.
 
 * **Rotor Diameter:** 8 meters.
-* **Coning Angle:** 10–15° backward (downwind swept).
+* **Magnus Cylinders (Spokes):** **3 per rotor** (12 total).
 
-**Rationale:**
-The wind strikes the rotor and pushes it backward. The coning angle forces this force to convert into **radial tension**, putting the outer rim in **100% pure tension (stretch)**. The rim does not buckle and remains a perfectly rigid **8-meter circle** while weighing very little.
+*Rationale:* Just like in conventional horizontal-axis wind turbines (HAWT), a 3-blade configuration is ideal for balancing vibrations. It prevents asymmetric gyroscopic torques (1P/3P vibrations) on the shaft when the craft changes direction (yaw) or is hit by gusts, protecting the bearings from fatigue—something 2- or 4-blade configurations cannot handle as smoothly.
 
-### Magnus Cylinders (Spokes)
+* **Coning Angle:** 10–15 degrees backward (downwind swept).
 
-* **Quantity:** 4 per rotor (16 total).
-* **Dimensions:** Length 4 m, radius 0.15 m.
-* **Material:** Internal aluminum/carbon ribs covered with lightweight durable **ripstop fabric** (~6 kg each).
+*Rationale:* The wind pushes the rotor. The coning angle converts pressure into radial tension, putting the outer rim in pure tensile load and keeping it perfectly circular without heavy reinforcement.
 
-### Rotor Rotation Speed
-
-* **Rotor RPM:** Slow rotation, constant **10–15 RPM** during generation.
-
-**Rationale:**
-Absolute **bird safety** and minimization of **parasitic drag** from the huge rotor disk.
+* **Rotor Speed:** Constantly low (e.g., 10–20 RPM).
 
 ---
 
-## 3. Control & Stability (Flight Authority)
+### 3. Control & Stability (The Quad Paradox)
 
-Heavy variable-pitch systems (**swashplates**) or large-rotor RPM changes are **completely absent**.
+This is the “heart” of the invention, explaining why it appears here and not in conventional aviation.
 
-* **Mechanism:** 16 independent **COTS (Commercial Off-The-Shelf) BLDC drone motors**, mounted at the base of each cylinder (at the hub).
-* **Cylinder Spin:** Up to **3,000 RPM**.
-* **Bearings:** **Tapered roller bearings** (e.g., SKF 30205) at each cylinder end, capable of simultaneously handling **>2,000 kg dynamic load** (lift + cone compression) at 3,000 RPM.
+* **Mechanism:** 12 independent BLDC motors control the spin (up to 3,000 RPM) of each cylinder individually. The autopilot stabilizes the craft by changing the speed of the lightweight cylinders, not the large rotors.
 
-**Rationale:**
-The autopilot stabilizes the craft (**pitch/roll**) by instantly adjusting the **spin of the small lightweight cylinders**. The **Magnus lift** changes differentially across each rotor quadrant, creating immediate control torque **without the nightmare of inertia**.
+* **The Advantage (Why the Quad Works Here):**
+  In conventional drones, quadcopter architecture collapses if the rotors become huge (e.g., 8 meters) due to the Law of Inertia ($R^5$). A heavy rotor changes speed slowly, making the craft unstable. The “Quad-Magnus” bypasses this law: it keeps the inertia of the large rotor constant and changes *instantly* the spin of the small, ultra-light cylinders.
+  You get the agility of a small drone in an industrial-scale craft, without complex helicopter swashplates.
 
----
-
-## 4. Power Take-Off (PTO)
-
-Electricity generation is not from the center but from the **rotor perimeter (rim-driven)**, using mechanical transmission instead of extremely expensive electromagnets.
-
-* **Transmission Mechanism:** External **timing belt** around the 8-meter rim driving a small gear/pulley.
-* **Gear Ratio:** Approximately **40:1**.
-* **Generators:** **4 × 5 kW sealed industrial BLDC generators** (total 20 kW).
-
-**Rationale:**
-The **10 RPM** of the massive rotor becomes **400+ RPM** at the generator. This saves **dozens of kilograms** by eliminating a traditional **central gearbox**, dramatically reducing cost while keeping the generator **air gap completely safe from aeroelastic deformation**.
+* **The Disadvantage (Why It Doesn’t Exist in Other Aircraft/Energy Systems):**
+  The Magnus cylinder has a terrible Lift-to-Drag ratio (L/D) and low Figure of Merit in hover compared to carbon-fiber blades. In a free-flying airplane or eVTOL, using cylinders would be “aerodynamic and energy suicide” (huge battery consumption, massive drag).
+  Here, however, because the craft is *permanently tethered* and generates electricity, absolute aerodynamic efficiency (L/D) is sacrificed in favor of mechanical simplicity, cheap flight control, and bird protection.
 
 ---
 
-## 5. Frame & Aerodynamics (Underslung Tensegrity Frame)
+### 4. Power Extraction (Power Take-Off – PTO)
 
-The frame is **not** a heavy rigid cross. It is a **tension-based cable structure**.
+* **Rim Drive (Mechanical):** External toothed belt (or gear teeth) around the 8-meter rim, transferring motion to small gears/wheels.
+* **Generators:** 4 off-the-shelf (COTS) industrial generators mounted on the perimeter, taking advantage of the rotational speed multiplication of the large ring.
 
-* **Rotor Tilt (Outward Tilt / Dihedral):** The four rotors are tilted **3–4° outward**.
-* **Frame Structure:** The tether attachment point is located **low**, forming an **inverted pyramid**. The center (tether) pulls downward while the four rotors pull **upward and outward**.
-
-**Rationale:**
-The 4° tilt generates a **centrifugal horizontal force (~170 kg per rotor)** that tensions the frame. Instead of heavy beams that would buckle, the system is held together with **light aluminum tubes and Dyneema cables** (tensile structure).
-
-By placing the frame **below the rotors (underslung)**, the system completely avoids **aerodynamic shadowing (wake blockage)** that would otherwise destroy the performance of the Magnus cylinders.
+*Rationale:* This eliminates the weight and vulnerability of a central gearbox while avoiding the astronomical cost (hundreds of thousands of euros) and collision risk of a custom 8-meter air-gap electromagnetic generator.
 
 ---
 
-## 6. Operational Profiles (Flight Modes)
+### 5. Frame & Aerodynamics (Tensile Rigid Frame)
 
-### Kite Mode (Power Generation)
+The craft has a conventional rigid frame (not just cables) to maintain its geometry, but it is designed to operate mainly in tension.
 
-* At wind speeds **>6 m/s**, the craft flies statically at an **elevation angle ~30°–40°**.
-* Rotors spin **passively at ~10 RPM**.
-* The small cylinder motors consume **~1–2 kW** for spin.
-* PTO produces **20+ kW**.
-* **Net ground power:** ~18–19 kW.
+* **Rotor Tilt (Dihedral / Outward Tilt):** The frame gives the 4 rotors a slight outward tilt of **3–4 degrees**.
+* **Frame Structure:** Tubular frame made from lightweight alloy (e.g., aluminum). It is placed below the rotors (underslung) on the tether side.
 
-### VTOL Mode (Takeoff / No Wind)
+*Rationale:* Because of the 3–4 degree tilt, as the rotors generate lift they also try to “escape” outward. This pulls on the frame tubes, placing them under pure *tension*. Since materials do not buckle when pulled, the frame can be made from extremely thin-section, lightweight aluminum (“small aluminum tubes”), saving hundreds of kilograms of weight. At the same time, being located under the rotors allows the frame to avoid aerodynamic hammering (wake blockage) from the cylinders.
 
-* In zero wind, the system **draws ~30 kW from the ground**.
-* The four generators act as **powerful motors**, violently spinning the rotor rims at **30–40 RPM** via the belts.
-* The spinning cylinders encounter **artificial airflow**, producing the required **vertical lift (>3,400 N)**.
-* The system ascends **vertically like a drone** to reach higher-altitude wind resources.
 
 
 ## Experimental Scope & Limitations
