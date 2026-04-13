@@ -95,7 +95,7 @@ To run the simulation locally, you need Python 3.8+ installed.
 
 3. Run the physics engine:
 
-   python quad12brushless.py
+   python quadm.py
 
 
 ### Controls (In-Simulation):
